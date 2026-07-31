@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bot A — Kontrollzentrum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #12161C;
+    --panel: #1B212B;
+    --panel-2: #212836;
+    --text: #EDEAE3;
+    --muted: #8A93A3;
+    --gain: #4FB286;
+    --loss: #D9636B;
+    --amber: #E3A857;
+    --line: #2A3140;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0; background: var(--ink); color: var(--text);
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 20px 16px 48px; }
+  header { padding: 8px 4px 20px; }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--amber); margin-bottom: 6px;
+  }
+  h1 { font-size: 26px; font-weight: 700; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .subtitle { color: var(--muted); font-size: 14px; }
+
+  .summary-strip {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: var(--line); border: 1px solid var(--line); border-radius: 14px;
+    overflow: hidden; margin: 18px 0;
+  }
+  .summary-cell { background: var(--panel); padding: 14px 12px; }
+  .summary-cell .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .summary-cell .val { font-family: 'IBM Plex Mono', monospace; font-size: 17px; margin-top: 4px; font-weight: 500; }
+
+  .swap-banner {
+    display: flex; gap: 12px; align-items: center; background: rgba(227,168,87,0.12);
+    border: 1px solid rgba(227,168,87,0.35); border-radius: 14px; padding: 12px 14px; margin: 0 0 20px;
+  }
+  .swap-icon { font-size: 20px; color: var(--amber); }
+  .swap-title { font-weight: 600; font-size: 14px; }
+  .swap-detail { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+  .rows { display: flex; flex-direction: column; gap: 10px; }
+  details.row {
+    background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--line);
+    border-radius: 12px; overflow: hidden;
+  }
+  details.row[open] { border-left-width: 3px; }
+  details.row.gain { border-left-color: var(--gain); }
+  details.row.loss { border-left-color: var(--loss); }
+  details.row summary {
+    list-style: none; cursor: pointer; display: grid;
+    grid-template-columns: 30px 1fr auto auto 18px; align-items: center; gap: 10px;
+    padding: 12px 12px; -webkit-tap-highlight-color: transparent;
+  }
+  details.row summary::-webkit-details-marker { display: none; }
+  details.row summary::marker { content: ""; }
+  .chevron { color: var(--muted); font-size: 18px; transition: transform 0.2s ease; justify-self: end; }
+  details.row[open] .chevron { transform: rotate(90deg); color: var(--amber); }
+  .rank { font-family: 'IBM Plex Mono', monospace; color: var(--muted); font-size: 13px; }
+  .name-line { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .name { font-weight: 600; font-size: 14.5px; }
+  .horizon { font-size: 10.5px; color: var(--muted); border: 1px solid var(--line); border-radius: 20px; padding: 1px 8px; }
+  .tag-new { font-size: 10px; color: var(--ink); background: var(--amber); border-radius: 20px; padding: 1px 8px; font-weight: 600; }
+  .meta { font-size: 11.5px; color: var(--muted); margin-top: 4px; font-family: 'IBM Plex Mono', monospace; }
+  .spark-wrap { display: none; }
+  @media (min-width: 480px) { .spark-wrap { display: block; } }
+  .numbers { text-align: right; }
+  .value { font-family: 'IBM Plex Mono', monospace; font-size: 14.5px; font-weight: 500; }
+  .return { font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; margin-top: 2px; }
+  details.row.gain .return { color: var(--gain); }
+  details.row.loss .return { color: var(--loss); }
+
+  .detail-panel {
+    border-top: 1px solid var(--line); background: var(--panel-2);
+    padding: 14px 14px 16px; animation: fade-in 0.15s ease;
+  }
+  @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+  .detail-panel h3 {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted);
+    margin: 12px 0 8px; font-weight: 600;
+  }
+  .detail-panel h3:first-child { margin-top: 0; }
+  table.pos-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  table.pos-table th { text-align: left; color: var(--muted); font-weight: 500; padding: 4px 6px; border-bottom: 1px solid var(--line); font-family: 'IBM Plex Mono', monospace; }
+  table.pos-table td { padding: 7px 6px; border-bottom: 1px solid var(--line); font-family: 'IBM Plex Mono', monospace; }
+  table.pos-table tr:last-child td { border-bottom: none; }
+  .asset-name { font-family: 'IBM Plex Sans', sans-serif; font-size: 12.5px; color: var(--text); white-space: normal; }
+  .asset-ticker { color: var(--muted); font-size: 10.5px; margin-top: 1px; }
+  ul.trade-log { list-style: none; margin: 0; padding: 0; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); }
+  ul.trade-log li { padding: 5px 0; border-bottom: 1px solid var(--line); }
+  ul.trade-log li:last-child { border-bottom: none; }
+  .empty-note { font-size: 12.5px; color: var(--muted); font-style: italic; }
+
+  .log-section { margin-top: 28px; }
+  .log-section h2 {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);
+    margin: 0 0 10px; font-weight: 600;
+  }
+  ul.swap-log { list-style: none; margin: 0; padding: 0; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; }
+  ul.swap-log li { padding: 7px 2px; border-bottom: 1px solid var(--line); color: var(--muted); }
+  .log-week { color: var(--amber); margin-right: 8px; }
+  .log-removed { color: var(--loss); }
+  .log-added { color: var(--gain); }
+
+  footer { margin-top: 28px; font-size: 11px; color: var(--muted); text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Bot A · Kontrollzentrum</div>
+    <h1>Strategie-Ranking</h1>
+    <div class="subtitle">Woche 6 · Stand 31.07.2026, 08:14 Uhr · Zeile antippen für Details</div>
+  </header>
+
+  <div class="summary-strip">
+    <div class="summary-cell"><div class="label">Gesamtwert</div><div class="val">51,031 €</div></div>
+    <div class="summary-cell"><div class="label">Beste</div><div class="val" style="color:var(--gain)">+6.20%</div></div>
+    <div class="summary-cell"><div class="label">Gebühren ges.</div><div class="val">25.74 €</div></div>
+  </div>
+
+  
+        <div class="swap-banner">
+          <span class="swap-icon">⇄</span>
+          <div>
+            <div class="swap-title">Strategie getauscht — Woche 1</div>
+            <div class="swap-detail">„rsi_swing" abgelöst durch „equal_weight_sp500"</div>
+          </div>
+        </div>
+
+  <div class="rows">
+    
+        <details class="row gain">
+          <summary>
+            <div class="rank">01</div>
+            <div class="info">
+              <div class="name-line">
+                <span class="name">Langfristiger ETF-Sparplan (MSCI World / All-World)</span>
+                <span class="horizon">Langfristig</span>
+                
+              </div>
+              <div class="meta">Gebühren: 0.00 € · Cash: 120.40 €</div>
+            </div>
+            <div class="spark-wrap"><svg width="120" height="32" viewBox="0 0 120 32" class="spark"><polyline points="0.0,32.0 24.0,25.8 48.0,16.3 72.0,7.2 96.0,3.6 120.0,0.0" fill="none" stroke="#4FB286" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="numbers">
+              <div class="value">10,620 €</div>
+              <div class="return">+6.20%</div>
+            </div>
+            <div class="chevron">›</div>
+          </summary>
+          <div class="detail-panel">
+            <h3>Positionen</h3>
+            
+            <table class="pos-table">
+              <thead><tr><th>Wertpapier</th><th>Stück</th><th>Ø Kauf</th><th>Aktuell</th><th>Wert</th></tr></thead>
+              <tbody>
+              <tr>
+                <td><div class="asset-name">iShares MSCI World ETF</div><div class="asset-ticker">URTH</div></td>
+                <td>45.2100</td>
+                <td>142.30 €</td>
+                <td>149.80 €</td>
+                <td>6772.46 €</td>
+              </tr>
+              <tr>
+                <td><div class="asset-name">Vanguard Total World Stock ETF</div><div class="asset-ticker">VT</div></td>
+                <td>33.9000</td>
+                <td>112.10 €</td>
+                <td>117.50 €</td>
+                <td>3983.25 €</td>
+              </tr></tbody>
+            </table>
+            <h3>Trades (zuletzt zuerst)</h3>
+            <ul class="trade-log"><li>BUY Vanguard Total World Stock ETF (VT): 4.3000 @ 117.50 (Gebühr 0.00 €)</li><li>BUY iShares MSCI World ETF (URTH): 5.1200 @ 149.80 (Gebühr 0.00 €)</li></ul>
+          </div>
+        </details>
+        <details class="row gain">
+          <summary>
+            <div class="rank">02</div>
+            <div class="info">
+              <div class="name-line">
+                <span class="name">Core-Satellite mit Faktor-/Themen-ETFs</span>
+                <span class="horizon">Mittelfristig</span>
+                
+              </div>
+              <div class="meta">Gebühren: 11.88 € · Cash: 340.10 €</div>
+            </div>
+            <div class="spark-wrap"><svg width="120" height="32" viewBox="0 0 120 32" class="spark"><polyline points="0.0,32.0 24.0,28.1 48.0,16.4 72.0,7.8 96.0,2.3 120.0,0.0" fill="none" stroke="#4FB286" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="numbers">
+              <div class="value">10,410 €</div>
+              <div class="return">+4.10%</div>
+            </div>
+            <div class="chevron">›</div>
+          </summary>
+          <div class="detail-panel">
+            <h3>Positionen</h3>
+            
+            <table class="pos-table">
+              <thead><tr><th>Wertpapier</th><th>Stück</th><th>Ø Kauf</th><th>Aktuell</th><th>Wert</th></tr></thead>
+              <tbody>
+              <tr>
+                <td><div class="asset-name">iShares MSCI USA Momentum Factor ETF</div><div class="asset-ticker">MTUM</div></td>
+                <td>12.4000</td>
+                <td>210.00 €</td>
+                <td>218.40 €</td>
+                <td>2708.16 €</td>
+              </tr>
+              <tr>
+                <td><div class="asset-name">iShares MSCI USA Quality Factor ETF</div><div class="asset-ticker">QUAL</div></td>
+                <td>18.1000</td>
+                <td>165.20 €</td>
+                <td>170.10 €</td>
+                <td>3078.81 €</td>
+              </tr>
+              <tr>
+                <td><div class="asset-name">VanEck Semiconductor ETF</div><div class="asset-ticker">SMH</div></td>
+                <td>9.8000</td>
+                <td>260.00 €</td>
+                <td>275.30 €</td>
+                <td>2697.94 €</td>
+              </tr></tbody>
+            </table>
+            <h3>Trades (zuletzt zuerst)</h3>
+            <ul class="trade-log"><li>SELL iShares MSCI USA Momentum Factor ETF (MTUM): 2.0000 @ 218.40 (Gebühr 0.99 €)</li><li>BUY VanEck Semiconductor ETF (SMH): 1.2000 @ 275.30 (Gebühr 0.99 €)</li></ul>
+          </div>
+        </details>
+        <details class="row gain">
+          <summary>
+            <div class="rank">03</div>
+            <div class="info">
+              <div class="name-line">
+                <span class="name">Trendfolge (Golden Cross 50/200)</span>
+                <span class="horizon">Mittelfristig</span>
+                
+              </div>
+              <div class="meta">Gebühren: 7.92 € · Cash: 180.55 €</div>
+            </div>
+            <div class="spark-wrap"><svg width="120" height="32" viewBox="0 0 120 32" class="spark"><polyline points="0.0,25.1 24.0,32.0 48.0,22.3 72.0,11.2 96.0,4.2 120.0,0.0" fill="none" stroke="#4FB286" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="numbers">
+              <div class="value">10,181 €</div>
+              <div class="return">+1.81%</div>
+            </div>
+            <div class="chevron">›</div>
+          </summary>
+          <div class="detail-panel">
+            <h3>Positionen</h3>
+            
+            <table class="pos-table">
+              <thead><tr><th>Wertpapier</th><th>Stück</th><th>Ø Kauf</th><th>Aktuell</th><th>Wert</th></tr></thead>
+              <tbody>
+              <tr>
+                <td><div class="asset-name">SPDR S&P 500 ETF Trust</div><div class="asset-ticker">SPY</div></td>
+                <td>15.0000</td>
+                <td>560.00 €</td>
+                <td>572.10 €</td>
+                <td>8581.50 €</td>
+              </tr></tbody>
+            </table>
+            <h3>Trades (zuletzt zuerst)</h3>
+            <ul class="trade-log"><li>BUY SPDR S&P 500 ETF Trust (SPY): 15.0000 @ 560.00 (Gebühr 0.99 €)</li></ul>
+          </div>
+        </details>
+        <details class="row loss">
+          <summary>
+            <div class="rank">04</div>
+            <div class="info">
+              <div class="name-line">
+                <span class="name">Dividenden-/Value-Strategie (Aristocrats-Proxy)</span>
+                <span class="horizon">Langfristig</span>
+                
+              </div>
+              <div class="meta">Gebühren: 5.94 € · Cash: 420.00 €</div>
+            </div>
+            <div class="spark-wrap"><svg width="120" height="32" viewBox="0 0 120 32" class="spark"><polyline points="0.0,0.0 24.0,12.8 48.0,25.6 72.0,6.4 96.0,19.2 120.0,32.0" fill="none" stroke="#D9636B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="numbers">
+              <div class="value">9,950 €</div>
+              <div class="return">-0.50%</div>
+            </div>
+            <div class="chevron">›</div>
+          </summary>
+          <div class="detail-panel">
+            <h3>Positionen</h3>
+            
+            <table class="pos-table">
+              <thead><tr><th>Wertpapier</th><th>Stück</th><th>Ø Kauf</th><th>Aktuell</th><th>Wert</th></tr></thead>
+              <tbody>
+              <tr>
+                <td><div class="asset-name">Vanguard High Dividend Yield ETF</div><div class="asset-ticker">VYM</div></td>
+                <td>40.0000</td>
+                <td>130.00 €</td>
+                <td>128.20 €</td>
+                <td>5128.00 €</td>
+              </tr></tbody>
+            </table>
+            <h3>Trades (zuletzt zuerst)</h3>
+            <div class="empty-note">Noch keine Trades in dieser Woche.</div>
+          </div>
+        </details>
+        <details class="row loss">
+          <summary>
+            <div class="rank">05</div>
+            <div class="info">
+              <div class="name-line">
+                <span class="name">Equal-Weight S&P 500</span>
+                <span class="horizon">Langfristig</span>
+                <span class="tag tag-new">neu eingesetzt</span>
+              </div>
+              <div class="meta">Gebühren: 0.00 € · Cash: 90.30 €</div>
+            </div>
+            <div class="spark-wrap"><svg width="120" height="32" viewBox="0 0 120 32" class="spark"><polyline points="0.0,0.0 24.0,12.3 48.0,24.7 72.0,17.3 96.0,29.6 120.0,32.0" fill="none" stroke="#D9636B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="numbers">
+              <div class="value">9,870 €</div>
+              <div class="return">-1.30%</div>
+            </div>
+            <div class="chevron">›</div>
+          </summary>
+          <div class="detail-panel">
+            <h3>Positionen</h3>
+            
+            <table class="pos-table">
+              <thead><tr><th>Wertpapier</th><th>Stück</th><th>Ø Kauf</th><th>Aktuell</th><th>Wert</th></tr></thead>
+              <tbody>
+              <tr>
+                <td><div class="asset-name">Invesco S&P 500 Equal Weight ETF</div><div class="asset-ticker">RSP</div></td>
+                <td>50.0000</td>
+                <td>198.00 €</td>
+                <td>195.10 €</td>
+                <td>9755.00 €</td>
+              </tr></tbody>
+            </table>
+            <h3>Trades (zuletzt zuerst)</h3>
+            <div class="empty-note">Noch keine Trades in dieser Woche.</div>
+          </div>
+        </details>
+  </div>
+
+  <div class="log-section">
+    <h2>Tausch-Verlauf</h2>
+    <ul class="swap-log">
+      <li><span class="log-week">W01</span> <span class="log-removed">rsi_swing</span> → <span class="log-added">equal_weight_sp500</span></li>
+    </ul>
+  </div>
+
+  <footer>Paper-Trading-Simulation · Gebühren nach Scalable-Capital-Preisverzeichnis · Keine Anlageberatung</footer>
+</div>
+</body>
+</html>
