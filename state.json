@@ -1,0 +1,93 @@
+{
+  "bots": [
+    {
+      "strategy_id": "buyhold_world_etf",
+      "cash": 2500.0,
+      "positions": {
+        "URTH": {
+          "shares": 24.63296928388708,
+          "avg_price": 202.97999572753906
+        },
+        "VT": {
+          "shares": 16.0823419046601,
+          "avg_price": 155.4499969482422
+        }
+      },
+      "total_fees_paid": 0.0,
+      "starting_capital": 10000.0
+    },
+    {
+      "strategy_id": "dividend_value",
+      "cash": 10000.0,
+      "positions": {
+        "VYM": {
+          "shares": 0.0,
+          "avg_price": 0.0
+        },
+        "SCHD": {
+          "shares": 0.0,
+          "avg_price": 0.0
+        }
+      },
+      "total_fees_paid": 0.0,
+      "starting_capital": 10000.0
+    },
+    {
+      "strategy_id": "golden_cross_trend",
+      "cash": 10000.0,
+      "positions": {
+        "SPY": {
+          "shares": 0.0,
+          "avg_price": 0.0
+        },
+        "QQQ": {
+          "shares": 0.0,
+          "avg_price": 0.0
+        }
+      },
+      "total_fees_paid": 0.0,
+      "starting_capital": 10000.0
+    },
+    {
+      "strategy_id": "rsi_swing",
+      "cash": 10000.0,
+      "positions": {
+        "AAPL": {
+          "shares": 0.0,
+          "avg_price": 0.0
+        },
+        "MSFT": {
+          "shares": 0.0,
+          "avg_price": 0.0
+        },
+        "NVDA": {
+          "shares": 0.0,
+          "avg_price": 0.0
+        }
+      },
+      "total_fees_paid": 0.0,
+      "starting_capital": 10000.0
+    },
+    {
+      "strategy_id": "equal_weight_sp500",
+      "cash": 10000.0,
+      "positions": {
+        "RSP": {
+          "shares": 0.0,
+          "avg_price": 0.0
+        }
+      },
+      "total_fees_paid": 0.0,
+      "starting_capital": 10000.0
+    }
+  ],
+  "week": 1,
+  "swap_history": [
+    {
+      "week": 1,
+      "removed": "core_satellite_factor",
+      "added": "equal_weight_sp500",
+      "date": "2026-07-31T09:13:58.260145"
+    }
+  ]
+}
