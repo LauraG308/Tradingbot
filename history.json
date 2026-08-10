@@ -1,21 +1,26 @@
 {
   "buyhold_world_etf": [
     10000.0,
-    10087.21
+    10087.21,
+    10325.88
   ],
   "dividend_value": [
+    10000.0,
     10000.0,
     10000.0
   ],
   "golden_cross_trend": [
     10000.0,
+    10000.0,
     10000.0
   ],
   "rsi_swing": [
     10000.0,
+    10000.0,
     10000.0
   ],
   "core_satellite_factor": [
+    10000.0,
     10000.0
   ],
   "equal_weight_sp500": [
