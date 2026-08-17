@@ -2,15 +2,15 @@
   "bots": [
     {
       "strategy_id": "buyhold_world_etf",
-      "cash": 156.25,
+      "cash": 39.0625,
       "positions": {
         "URTH": {
-          "shares": 32.20402039954845,
-          "avg_price": 203.77890457714457
+          "shares": 32.57391291181866,
+          "avg_price": 203.86328833066318
         },
         "VT": {
-          "shares": 21.0269491911971,
-          "avg_price": 156.04974217437544
+          "shares": 21.26770419890126,
+          "avg_price": 156.11993043290187
         }
       },
       "total_fees_paid": 0.0,
@@ -49,39 +49,39 @@
       "starting_capital": 10000.0
     },
     {
-      "strategy_id": "rsi_swing",
-      "cash": 10000.0,
+      "strategy_id": "core_satellite_factor",
+      "cash": 9999.01,
       "positions": {
-        "AAPL": {
+        "MTUM": {
           "shares": 0.0,
           "avg_price": 0.0
         },
-        "MSFT": {
+        "QUAL": {
           "shares": 0.0,
           "avg_price": 0.0
         },
-        "NVDA": {
+        "SMH": {
           "shares": 0.0,
           "avg_price": 0.0
         }
       },
       "total_fees_paid": 0.0,
-      "starting_capital": 10000.0
+      "starting_capital": 9999.01
     },
     {
       "strategy_id": "equal_weight_sp500",
-      "cash": 10000.0,
+      "cash": 0.0,
       "positions": {
         "RSP": {
-          "shares": 0.0,
-          "avg_price": 0.0
+          "shares": 44.88934689685334,
+          "avg_price": 222.77000427246094
         }
       },
       "total_fees_paid": 0.0,
       "starting_capital": 10000.0
     }
   ],
-  "week": 3,
+  "week": 4,
   "swap_history": [
     {
       "week": 1,
@@ -100,6 +100,12 @@
       "removed": "core_satellite_factor",
       "added": "equal_weight_sp500",
       "date": "2026-08-10T10:47:47.043004"
+    },
+    {
+      "week": 4,
+      "removed": "rsi_swing",
+      "added": "core_satellite_factor",
+      "date": "2026-08-17T09:11:39.485919"
     }
   ]
 }
