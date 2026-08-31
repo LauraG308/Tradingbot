@@ -43,3 +43,12 @@
 5. Equal-Weight S&P 500 [long] – Wert: 9950.62 € | Rendite: -0.49% | Gebühren gesamt: 0.00 €
 
 >> Schlechteste Strategie: 'Equal-Weight S&P 500' (Rendite -0.49%) wird ersetzt durch: 'Kurzfristiges Swing-Trading (RSI Mean-Reversion)'
+
+=== Bot A Wochenbericht – 2026-08-31 07:04 (Woche 6) ===
+1. Langfristiger ETF-Sparplan (MSCI World / All-World) [long] – Wert: 10285.38 € | Rendite: 2.85% | Gebühren gesamt: 0.00 €
+2. Dividenden-/Value-Strategie (Aristocrats-Proxy) [long] – Wert: 10000.00 € | Rendite: 0.00% | Gebühren gesamt: 0.00 €
+3. Trendfolge (Golden Cross 50/200) [medium] – Wert: 10000.00 € | Rendite: 0.00% | Gebühren gesamt: 0.00 €
+4. Core-Satellite mit Faktor-/Themen-ETFs [medium] – Wert: 9999.01 € | Rendite: 0.00% | Gebühren gesamt: 0.00 €
+5. Kurzfristiges Swing-Trading (RSI Mean-Reversion) [short] – Wert: 9950.62 € | Rendite: 0.00% | Gebühren gesamt: 0.00 €
+
+>> Schlechteste Strategie: 'Kurzfristiges Swing-Trading (RSI Mean-Reversion)' (Rendite 0.00%) wird ersetzt durch: 'Equal-Weight S&P 500'
