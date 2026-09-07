@@ -2,11 +2,11 @@
   "bots": [
     {
       "strategy_id": "buyhold_world_etf",
-      "cash": 2.44140625,
+      "cash": 1.220703125,
       "positions": {
         "URTH": {
-          "shares": 32.690647348460296,
-          "avg_price": 203.88213764796916
+          "shares": 32.6964652070171,
+          "avg_price": 203.88319420517456
         },
         "VT": {
           "shares": 21.343610101347778,
@@ -69,10 +69,18 @@
       "starting_capital": 9999.01
     },
     {
-      "strategy_id": "equal_weight_sp500",
+      "strategy_id": "rsi_swing",
       "cash": 9950.62,
       "positions": {
-        "RSP": {
+        "AAPL": {
+          "shares": 0.0,
+          "avg_price": 0.0
+        },
+        "MSFT": {
+          "shares": 0.0,
+          "avg_price": 0.0
+        },
+        "NVDA": {
           "shares": 0.0,
           "avg_price": 0.0
         }
@@ -81,7 +89,7 @@
       "starting_capital": 9950.62
     }
   ],
-  "week": 6,
+  "week": 7,
   "swap_history": [
     {
       "week": 1,
@@ -118,6 +126,12 @@
       "removed": "rsi_swing",
       "added": "equal_weight_sp500",
       "date": "2026-08-31T07:04:05.000678"
+    },
+    {
+      "week": 7,
+      "removed": "equal_weight_sp500",
+      "added": "rsi_swing",
+      "date": "2026-09-07T13:13:37.892169"
     }
   ]
 }
