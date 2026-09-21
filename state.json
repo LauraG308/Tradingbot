@@ -69,10 +69,18 @@
       "starting_capital": 9999.01
     },
     {
-      "strategy_id": "equal_weight_sp500",
+      "strategy_id": "rsi_swing",
       "cash": 9950.62,
       "positions": {
-        "RSP": {
+        "AAPL": {
+          "shares": 0.0,
+          "avg_price": 0.0
+        },
+        "MSFT": {
+          "shares": 0.0,
+          "avg_price": 0.0
+        },
+        "NVDA": {
           "shares": 0.0,
           "avg_price": 0.0
         }
@@ -81,7 +89,7 @@
       "starting_capital": 9950.62
     }
   ],
-  "week": 8,
+  "week": 9,
   "swap_history": [
     {
       "week": 1,
@@ -130,6 +138,12 @@
       "removed": "rsi_swing",
       "added": "equal_weight_sp500",
       "date": "2026-09-14T13:34:22.236175"
+    },
+    {
+      "week": 9,
+      "removed": "equal_weight_sp500",
+      "added": "rsi_swing",
+      "date": "2026-09-21T13:33:16.604637"
     }
   ]
 }
