@@ -49,24 +49,16 @@
       "starting_capital": 10000.0
     },
     {
-      "strategy_id": "core_satellite_factor",
-      "cash": 9999.01,
+      "strategy_id": "equal_weight_sp500",
+      "cash": 9998.02,
       "positions": {
-        "MTUM": {
-          "shares": 0.0,
-          "avg_price": 0.0
-        },
-        "QUAL": {
-          "shares": 0.0,
-          "avg_price": 0.0
-        },
-        "SMH": {
+        "RSP": {
           "shares": 0.0,
           "avg_price": 0.0
         }
       },
       "total_fees_paid": 0.0,
-      "starting_capital": 9999.01
+      "starting_capital": 9998.02
     },
     {
       "strategy_id": "rsi_swing",
@@ -89,7 +81,7 @@
       "starting_capital": 9950.62
     }
   ],
-  "week": 9,
+  "week": 10,
   "swap_history": [
     {
       "week": 1,
@@ -144,6 +136,12 @@
       "removed": "equal_weight_sp500",
       "added": "rsi_swing",
       "date": "2026-09-21T13:33:16.604637"
+    },
+    {
+      "week": 10,
+      "removed": "core_satellite_factor",
+      "added": "equal_weight_sp500",
+      "date": "2026-09-28T14:53:09.230059"
     }
   ]
 }
