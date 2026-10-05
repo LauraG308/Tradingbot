@@ -50,29 +50,29 @@
     },
     {
       "strategy_id": "equal_weight_sp500",
-      "cash": 9998.02,
+      "cash": 0.0,
       "positions": {
         "RSP": {
-          "shares": 0.0,
-          "avg_price": 0.0
+          "shares": 47.54170164010576,
+          "avg_price": 210.3000030517578
         }
       },
       "total_fees_paid": 0.0,
       "starting_capital": 9998.02
     },
     {
-      "strategy_id": "rsi_swing",
+      "strategy_id": "core_satellite_factor",
       "cash": 9950.62,
       "positions": {
-        "AAPL": {
+        "MTUM": {
           "shares": 0.0,
           "avg_price": 0.0
         },
-        "MSFT": {
+        "QUAL": {
           "shares": 0.0,
           "avg_price": 0.0
         },
-        "NVDA": {
+        "SMH": {
           "shares": 0.0,
           "avg_price": 0.0
         }
@@ -81,7 +81,7 @@
       "starting_capital": 9950.62
     }
   ],
-  "week": 10,
+  "week": 11,
   "swap_history": [
     {
       "week": 1,
@@ -142,6 +142,12 @@
       "removed": "core_satellite_factor",
       "added": "equal_weight_sp500",
       "date": "2026-09-28T14:53:09.230059"
+    },
+    {
+      "week": 11,
+      "removed": "rsi_swing",
+      "added": "core_satellite_factor",
+      "date": "2026-10-05T15:29:36.377666"
     }
   ]
 }
