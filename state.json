@@ -61,27 +61,27 @@
       "starting_capital": 9998.02
     },
     {
-      "strategy_id": "core_satellite_factor",
-      "cash": 9950.62,
+      "strategy_id": "rsi_swing",
+      "cash": 9948.64,
       "positions": {
-        "MTUM": {
+        "AAPL": {
           "shares": 0.0,
           "avg_price": 0.0
         },
-        "QUAL": {
+        "MSFT": {
           "shares": 0.0,
           "avg_price": 0.0
         },
-        "SMH": {
+        "NVDA": {
           "shares": 0.0,
           "avg_price": 0.0
         }
       },
       "total_fees_paid": 0.0,
-      "starting_capital": 9950.62
+      "starting_capital": 9948.64
     }
   ],
-  "week": 11,
+  "week": 12,
   "swap_history": [
     {
       "week": 1,
@@ -148,6 +148,12 @@
       "removed": "rsi_swing",
       "added": "core_satellite_factor",
       "date": "2026-10-05T15:29:36.377666"
+    },
+    {
+      "week": 12,
+      "removed": "core_satellite_factor",
+      "added": "rsi_swing",
+      "date": "2026-10-12T16:24:44.885233"
     }
   ]
 }
