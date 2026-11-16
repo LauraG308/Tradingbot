@@ -1,24 +1,20 @@
 {
   "bots": [
     {
-      "strategy_id": "rsi_swing",
-      "cash": 9992.43,
+      "strategy_id": "buyhold_world_etf",
+      "cash": 9991.44,
       "positions": {
-        "AAPL": {
+        "URTH": {
           "shares": 0.0,
           "avg_price": 0.0
         },
-        "MSFT": {
-          "shares": 0.0,
-          "avg_price": 0.0
-        },
-        "NVDA": {
+        "VT": {
           "shares": 0.0,
           "avg_price": 0.0
         }
       },
       "total_fees_paid": 0.0,
-      "starting_capital": 9992.43
+      "starting_capital": 9991.44
     },
     {
       "strategy_id": "dividend_value",
@@ -85,7 +81,7 @@
       "starting_capital": 9948.64
     }
   ],
-  "week": 16,
+  "week": 17,
   "swap_history": [
     {
       "week": 1,
@@ -182,6 +178,12 @@
       "removed": "buyhold_world_etf",
       "added": "rsi_swing",
       "date": "2026-11-09T17:04:19.183387"
+    },
+    {
+      "week": 17,
+      "removed": "rsi_swing",
+      "added": "buyhold_world_etf",
+      "date": "2026-11-16T16:41:33.374965"
     }
   ]
 }
